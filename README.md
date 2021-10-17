@@ -22,12 +22,16 @@ Your dynDNS password(s) will be in plain text in the config file. To increase se
 
 ## Configuration
 IPV6=0,1,2 --> 0 is IPV4 only, 1 is IPV6 only, 2 is both
+
 login=XXX --> Login you set when creating the dyndns host
+
 password=XXX --> Password you set when creating the dyndns host
+
 host=a.domain.com --> hostname
 
 Create one file per host in the config folder ending it with ".conf"
 
 ## Advanced Configuration 
 In dnsUpdate.bash you can set another folder by setting the CONFIGDIR variable to the config folder path you want (don't forget the Security note).
+
 You can also set another way to get the new IPV4/IPV6 by changing CURRENTIPV4 or CURRENTIPV6.
