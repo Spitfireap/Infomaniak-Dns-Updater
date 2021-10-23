@@ -10,8 +10,8 @@
 CONFIGDIR="$(pwd)/IDUConfig"
 
 #Advanced settings : if you want to get the IP another way, change this
-CURRENTIPV4=$(curl http://ifconfig.me)
-CURRENTIPV6=$(curl Icanhazip.com)
+CURRENTIPV4=$(curl -s -o /dev/null http://ifconfig.me)
+CURRENTIPV6=$(curl -s -o /dev/null Icanhazip.com)
 #----------------------------------------PROGRAM----------------------------------------
 function UpdateIPV6 () {
     if [ "$CURRENTIPUSED" != "$CURRENTIPV6" ] ;then
