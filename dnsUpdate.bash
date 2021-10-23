@@ -48,7 +48,7 @@ function UpdateIPV4 () {
 function Parser() {
     for file in $CONFIGDIR/*.conf; do
         if [ "$VERBOSE" = "1" ]; then
-            echo "Currently looking to file $(basename $FILE)"
+            echo "Currently looking to file $(basename $file)"
         fi
         
         FILE=$(cat $file)
@@ -98,4 +98,5 @@ for i in "$@"; do
     break
     ;;
     esac
+done
 #---------------------------------------------------------------------------------------
