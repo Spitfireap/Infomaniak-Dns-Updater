@@ -7,11 +7,11 @@
 #
 #-------------------------------------CONFIGURATION-------------------------------------
 #Set this variable to the config folder path, by default: /.../thisScript/IDUConfig
-CONFIGDIR="$(pwd)/IDUConfig"
+CONFIGDIR="$(dirname "$(readlink -f $0)")/IDUConfig"
 
 #Advanced settings : if you want to get the IP another way, change this
-CURRENTIPV4=$(curl -s -o /dev/null http://ifconfig.me)
-CURRENTIPV6=$(curl -s -o /dev/null Icanhazip.com)
+CURRENTIPV4=$(curl -s http://ifconfig.me)
+CURRENTIPV6=$(curl -s Icanhazip.com)
 #----------------------------------------PROGRAM----------------------------------------
 function UpdateIPV6 () {
     if [ "$CURRENTIPUSED" != "$CURRENTIPV6" ] ;then
@@ -57,17 +57,20 @@ function Parser() {
         LOGIN=$(echo "$FILE" | awk '/^login=/' | cut -d "=" -f2)
         PASSWORD=$(echo "$FILE" | awk '/^password=/' | cut -d "=" -f2)
         HOST=$(echo "$FILE" | awk '/^host=/' | cut -d "=" -f2)
-        CURRENTIPUSED=$(getent hosts "$HOST" | awk '{ print $1 }')
         
         case $IPV6 in
         "1")
+        CURRENTIPUSED=$(host -t AAAA "$HOST" | awk '/has.*address/{print $NF}')
         UpdateIPV6
         ;;
         "2")
+        CURRENTIPUSED=$(host -t A "$HOST" | awk '/has.*address/{print $NF}')
         UpdateIPV4
+        CURRENTIPUSED=$(host -t AAAA "$HOST" | awk '/has.*address/{print $NF}')
         UpdateIPV6
         ;;
         *)
+        CURRENTIPUSED=$(host -t A "$HOST" | awk '/has.*address/{print $NF}')
         UpdateIPV4
         esac
     done
